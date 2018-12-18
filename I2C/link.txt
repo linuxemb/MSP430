@@ -1,0 +1,28 @@
+https://electronics.stackexchange.com/questions/67524/msp430-i%C2%B2c-single-write-read-example
+
+MSP430G2xx3 Demo - USCI_B0 I2C Master RX single bytes from MSP430 Slave
+    //
+    //  Description: This demo connects two MSP430's via the I2C bus. The master
+    //  reads from the slave. This is the master code. The data from the slave
+    //  transmitter begins at 0 and increments with each transfer. The received
+    //  data is in R5 and is checked for validity. If the received data is
+    //  incorrect, the CPU is trapped and the P1.0 LED will stay on. The USCI_B0
+    //  RX interrupt is used to know when new data has been received.
+    //  ACLK = n/a, MCLK = SMCLK = BRCLK = default DCO = ~1.2MHz
+    //
+    //                                /|\  /|\
+    //               MSP430G2xx3      10k  10k     MSP430G2xx3
+    //                   slave         |    |        master
+    //             -----------------   |    |  -----------------
+    //           -|XIN  P1.7/UCB0SDA|<-|---+->|P1.7/UCB0SDA  XIN|-
+    //            |                 |  |      |                 | 32kHz
+    //           -|XOUT             |  |      |             XOUT|-
+    //            |     P1.6/UCB0SCL|<-+----->|P1.6/UCB0SCL     |
+    //            |                 |         |             P1.0|--> LED
+    //
+    //  D. Dang
+Have you tried setting the pins to the required output/input setting? – Keelan Apr 29 '13 at 9:11
+Of course, as i told you my circuit is as it's required. 1.7 to SDA and 1.6 to SCL, two 10K pull-up resistors on them. The wierd part is that these two examples are working seperately. But my code which i combined them is not working so I'm pretty sure that the problem is code based. – Bariscan Kayaoglu Apr 29 '13 at 9:22
+Yes, but did you configure the pins as output/input? You should do that in the code, not in the circuit. – Keelan Apr 29 '13 at 9:25
+I don't think that is required. Since these two pins are bus related, selecting them to USCI_B0 will do. P1SEL |= BIT6 + BIT7; // Assign I2C pins to USCI_B0 P1SEL2|= BIT6 + BIT7; // Assign I2C pins to USCI_B0 In TI's examples, they do exactly the same without any configuration on the pins except the selecting. – Bariscan Kayaoglu Apr 29 '13 at 9:29 
+Me neither, but for SPI it is required on some controllers and I follow the rule "better just do it, then you're sure". But feel free to omit it, and let's just hope it doesn't work out bad for you. – Keelan Apr 29 '13 at 9:31
