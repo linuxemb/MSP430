@@ -1,9 +1,9 @@
 //***********************************************************
-// Lab3a.c  Using VLO/8 as MCLK
 //
-// Green LED on LaunchPad should toggle about every 3 seconds
-//e
-// SFB 1/2012
+//
+// Flash REad and Write test 
+//
+// 
 //**********************************ew************************
 
 #include  "msp430g2553.h"
